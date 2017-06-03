@@ -1,24 +1,27 @@
 /**
  * Created by chenkang1 on 2017/6/3.
  */
-import React from 'react'
-import { Router, Route, IndexRoute, useRouterHistory } from 'react-router';
-import { createHashHistory } from 'history';
-import Nav from './Nav'
+import React, {Component} from 'react'
+import { Link } from 'react-router';
 
-const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+class App extends Component {
 
-const routes = (
-    <Route path="/" component={Nav}>
-
-
-    </Route>
-);
-
-
-const App = () => (
-    <Router history={appHistory} routes={routes} />
-)
+    render() {
+        return (
+            <div>
+                <div>title</div>
+                <div>
+                    <Link to="/Nav">Nav</Link>
+                    <Link to="/Nav2">Nav2</Link>
+                    {/*<Link to="/">标签</Link>*/}
+                </div>
+                <div>
+                    {this.props.children}
+                </div>
+            </div>
+        )
+    }
+}
 
 
 export default App;
