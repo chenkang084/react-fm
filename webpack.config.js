@@ -1,59 +1,47 @@
-var webpack = require('webpack');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var OpenBrowserPlugin = require('open-browser-webpack-plugin');
-var WebpackMd5Hash = require('webpack-md5-hash');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var webpack = require('webpack'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
+    // autoprefixer = require('autoprefixer'),
+    // ngAnnotatePlugin = require('ng-annotate-webpack-plugin'),
+    // CopyWebpackPlugin = require('copy-webpack-plugin'),
+    _ = require('lodash'),
+    path = require('path'),
+    ExtractTextPlugin = require('extract-text-webpack-plugin'),
+    env = _.trim(process.env.NODE_ENV);
 
-var copy = require('quickly-copy-file');
-var del = require('del');
+console.log("=============================" + env + "=============================");
+console.log("=============================" + __dirname + "=============================");
 
-// 开发环境
-var isDev = function () {
-    return process.env.NODE_ENV.trim() === 'development';
-};
-
-// 生产环境
-var isProd = function () {
-    return process.env.NODE_ENV.trim() === 'production';
-};
-
-copyAndDelFiles();
-
-module.exports = {
-    devtool: isProd() ? false : 'inline-source-map',
+var webpackConfig = {
+    devtool: 'cheap-module-source-map', //generate source map for developing
     entry: {
-        index: [
-            './src/js/index.js'
-        ],
-        vendor: [
-            'react',
-            'react-dom',
-            'react-router',
-            'react-redux',
-            'redux',
-            'redux-thunk',
-            'nprogress'
-        ]
+        app: __dirname + "/src/js/index.js", //the main file for start app
+        vendor: [],
+    },
+
+    output: {
+        // publicPath: __dirname + "/public",
+        path: __dirname + "/dist", //the path saving packed file
+        // filename: "bundle[hash].js" //the out put file name
+        filename: "bundle.js"
     },
     // devServer: {
-    //     contentBase: "./", //webpack server read file path
+    //     contentBase: "./public", //webpack server read file path
     //     colors: true, //terminal shows log with color
     //     historyApiFallback: true, //
     //     inline: true, //
     //     hot: true,
     //     progress: true,
-    //     compress: true,
-    //     host: '0.0.0.0',
-    //     disableHostCheck: true,
-    //     port: '8000'
+    //     compress: true
     // },
-    output: {
-        path: './dist',
-        filename: isProd() ? '[name].[chunkhash:8].js' : '[name].js',
-        chunkFilename: isProd() ? '[name].chunk.[chunkhash:8].js' : '[name].chunk.js',
-        publicPath: isProd() ? './dist/' : '/dist/'
+    resolve: {
+        extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
+        alias: {}
     },
-    module: {
+    module: { //
+        noParse: [
+            /moment-with-locales/
+        ],
+
         loaders: [{
             test: /\.scss$/,
             exclude: /node_modules/,
@@ -69,70 +57,56 @@ module.exports = {
             loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
         }]
     },
-    plugins: getPlugins()
-};
 
-// 复制和删除文件
-function copyAndDelFiles() {
-    var copyFile = '';
+    // postcss: function() {
+    //     return [autoprefixer];
+    // },
 
-    // 复制文件
-    if (isDev()) {
-        copyFile = 'src/html/index_dev.html';
-    }
-
-    if (isProd()) {
-        copyFile = 'src/html/index.html';
-    }
-
-    copy(copyFile, 'index.html', function (error) {
-        if (error) {
-            return console.error(error);
-        }
-    });
-
-    if (isProd()) {
-        del(['dist']);
-    }
-}
-
-// 获取配置
-function getPlugins() {
-    var plugins = [
-        new webpack.DefinePlugin({
-            __DEV__: isDev(),
-            __PROD__: isProd(),
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV.trim())
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: './index.html',
+            template: __dirname + "/src/html/index.html" //packed js append to index.html,set index.html path
         }),
-        new webpack.optimize.CommonsChunkPlugin('vendor', isProd() ? 'vendor.[chunkhash:8].js' : 'vendor.js'),
-        new ExtractTextPlugin(isProd() ? '[name].[chunkhash:8].css' : '[name].css'),
-    ];
+        new webpack.DefinePlugin({
+            'process.env': "'" + env + "'",
+        }),
+        new webpack.optimize.CommonsChunkPlugin(/* chunkName= */ "vendor", /* filename= */ "vendor.bundle.js"),
 
-    if (isDev()) {
-        plugins.push(
-            // new OpenBrowserPlugin({url: 'http://localhost:8080/'})
-        );
-    }
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',
+            $: 'jquery',
+            jquery: 'jquery'
+        }),
 
-    if (isProd()) {
-        plugins.push(
-            new webpack.optimize.UglifyJsPlugin({
-                minimize: true,
-                output: {
-                    comments: false,
-                },
-                compress: {
-                    warnings: false
-                }
-            }),
-            new HtmlWebpackPlugin({
-                title: 'cobish - 写给未来的自己',
-                filename: '../index.html',
-                template: './src/html/index.html'
-            }),
-            new WebpackMd5Hash()
-        );
-    }
+        // new ngAnnotatePlugin({ add: true }),
 
-    return plugins
+        // new webpack.DllReferencePlugin({
+        //     context: __dirname + "",
+        //     manifest: require('./app/assets/dll/vendor-manifest.json')
+        // }),
+
+        // new CopyWebpackPlugin([{
+        //     from: './app/assets',
+        //     to: 'assets'
+        // }]),
+
+        // new ExtractTextPlugin('style.css', {
+        //     allChunks: true,
+        // }),
+
+    ],
+
 }
+
+if (env == 'prod') {
+    console.log("=============================start uglify=============================");
+    webpackConfig.plugins = webpackConfig.plugins.concat([
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false
+            }
+        })
+    ]);
+}
+
+module.exports = webpackConfig;
