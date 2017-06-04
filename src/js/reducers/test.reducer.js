@@ -3,16 +3,18 @@
  */
 
 const initialState = {
-    type:'nav'
+    type:'test'
 }
 
-const nav = (state = initialState, action) => {
+const test = (state = initialState, action) => {
 
     switch (action.type) {
+        case 'test':
+            return state;
 
         default:
             return state;
     }
 }
 
-export default nav;
+export default test;

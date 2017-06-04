@@ -11,12 +11,16 @@ import thunk from 'redux-thunk'
 
 const middleware = [ thunk ];
 
+
 const store = createStore(
     reducer,
     applyMiddleware(...middleware)
 )
 
 render(
-    <Root/>,
+    <Provider store={store} >
+        <Root/>
+    </Provider>
+    ,
     document.getElementById('root')
 )
