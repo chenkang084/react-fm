@@ -6,13 +6,15 @@ import { Router, Route, IndexRoute, useRouterHistory,hashHistory } from 'react-r
 import { createHashHistory } from 'history';
 import App from './App'
 import Nav from './Nav'
+import Nav3 from './Nav3'
 import Nav2 from './Nav2'
 
 // const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
 
 const routes = (
     <Route path="/" component={App}>
-        <Route path="/Nav" component={Nav}/>
+        {/*<IndexRoute component={Home}/>*/}
+        <Route path="/Nav" component={Nav3}/>
         <Route path="/Nav2" component={Nav2}/>
 
     </Route>

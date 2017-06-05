@@ -8,6 +8,8 @@ import reducer from './reducers'
 import Root from './containers/Root'
 import {createStore, applyMiddleware} from 'redux'
 import thunk from 'redux-thunk'
+import "../css/libs.scss"
+
 
 const middleware = [ thunk ];
 

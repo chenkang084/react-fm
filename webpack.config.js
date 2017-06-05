@@ -1,6 +1,6 @@
 var webpack = require('webpack'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
-    // autoprefixer = require('autoprefixer'),
+    autoprefixer = require('autoprefixer'),
     // ngAnnotatePlugin = require('ng-annotate-webpack-plugin'),
     // CopyWebpackPlugin = require('copy-webpack-plugin'),
     _ = require('lodash'),
@@ -42,25 +42,30 @@ var webpackConfig = {
             /moment-with-locales/
         ],
 
-        loaders: [{
-            test: /\.scss$/,
-            exclude: /node_modules/,
-            loader: ExtractTextPlugin.extract('style-loader', 'css-loader', {
-                publicPath: '.'
-            })
-        }, {
-            test: /\.(png|jpg)$/,
-            loader: 'file-loader?name=/[name].[hash:8].[ext]'
-        }, {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
-        }]
+        loaders: [
+            {
+                test: /\.scss$/,
+                exclude: /node_modules/,
+                loader: ExtractTextPlugin.extract(['css-loader', 'postcss-loader', 'sass-loader']),
+            },
+            {
+                test: /\.(eot|woff|woff2|ttf|svg|png|jpe?g|gif)(\?\S*)?$/,
+                loader: 'file'
+            },
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'file-loader?name=/[name].[hash:8].[ext]'
+            }, {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
+            }
+        ]
     },
 
-    // postcss: function() {
-    //     return [autoprefixer];
-    // },
+    postcss: function () {
+        return [autoprefixer];
+    },
 
     plugins: [
         new HtmlWebpackPlugin({
@@ -90,9 +95,9 @@ var webpackConfig = {
         //     to: 'assets'
         // }]),
 
-        // new ExtractTextPlugin('style.css', {
-        //     allChunks: true,
-        // }),
+        new ExtractTextPlugin('style.css', {
+            allChunks: true,
+        }),
 
     ],
 
