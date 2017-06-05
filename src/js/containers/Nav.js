@@ -3,19 +3,18 @@
  */
 import React, {Component, PropTypes} from 'react';
 import {Link} from 'react-router';
+import {Nav, NavItem} from 'react-bootstrap';
 
-
-class Nav extends Component {
+class TopNav extends Component {
     render() {
         return (
-            <div className="link">
-                <Link to="/">home</Link>
-                <Link to="/artciles">artciles</Link>
-                <Link to="/blog">blog</Link>
-                <Link to="/about">about me</Link>
-            </div>
+            <Nav bsStyle="pills" activeKey={1} >
+                <NavItem eventKey={1} href="#/home">Home</NavItem>
+                <NavItem eventKey={2} href="#/blog">Blog</NavItem>
+                <NavItem eventKey={3} disabled>Articles</NavItem>
+            </Nav>
         )
     }
 }
 
-export default Nav
+export default TopNav

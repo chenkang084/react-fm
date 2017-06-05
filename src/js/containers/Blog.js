@@ -3,21 +3,17 @@
  */
 import React, {Component} from 'react';
 import { Link } from 'react-router';
-import Nav from './Nav'
 
-class App extends Component {
+class Home extends Component {
 
     render() {
         return (
             <div>
-                <Nav/>
-                <div>
-                    {this.props.children}
-                </div>
+                blog page
             </div>
         )
     }
 }
 
 
-export default App;
+export default Home;
