@@ -44,7 +44,7 @@ function shouldFetchIssues(state) {
         return true;
     }
 
-    return !state.item.length;
+    return !state.items.length;
 }
 
 export function fetchIssuesIfNeeded(filter,perPage) {

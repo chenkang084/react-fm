@@ -15,7 +15,7 @@ export default class Menu extends Component{
                 <div>cobish</div>
                 <div className="link">
                     <Link to="all">全部</Link>
-                    <Link to="all">归档</Link>
+                    <Link to="archive">归档</Link>
                     <Link to="all">标签</Link>
                 </div>
             </div>
