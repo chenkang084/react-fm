@@ -6,16 +6,24 @@ import { Router, Route, IndexRoute, useRouterHistory,hashHistory } from 'react-r
 import { createHashHistory } from 'history';
 import App from './App'
 import Menu from '../components/Menu'
-import Home from './Home'
 import Blog from './Blog'
-import Nav2 from './Nav2'
-
+import {CONFIG} from '../constants/Config'
+import NProgress from 'nprogress';
 // const appHistory = useRouterHistory(createHashHistory)({ queryKey: false });
+
+let All = (location,cb)=>{
+    document.title = CONFIG.titleLoad;
+    NProgress.start();
+    require.ensure([],require =>{
+        cb(null,require('../containers/All.js').default)
+    },'all');
+};
+
 
 const routes = (
     <Route path="/" component={App}>
         <IndexRoute component={Menu}/>
-        <Route path="/home" component={Home}/>
+        <Route path="/all" getComponent={All}/>
         <Route path="/blog" component={Blog}/>
 
     </Route>
