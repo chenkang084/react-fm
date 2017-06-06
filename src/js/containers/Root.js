@@ -5,6 +5,7 @@ import React from 'react'
 import { Router, Route, IndexRoute, useRouterHistory,hashHistory } from 'react-router';
 import { createHashHistory } from 'history';
 import App from './App'
+import Menu from '../components/Menu'
 import Home from './Home'
 import Blog from './Blog'
 import Nav2 from './Nav2'
@@ -13,7 +14,7 @@ import Nav2 from './Nav2'
 
 const routes = (
     <Route path="/" component={App}>
-        <IndexRoute component={Home}/>
+        <IndexRoute component={Menu}/>
         <Route path="/home" component={Home}/>
         <Route path="/blog" component={Blog}/>
 
@@ -23,7 +24,7 @@ const routes = (
 
 const Root = () => (
     <Router history={hashHistory} routes={routes} />
-)
+);
 
 
 export default Root;

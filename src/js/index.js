@@ -4,25 +4,16 @@
 import {Provider} from 'react-redux'
 import React from 'react'
 import {render} from 'react-dom'
-import reducer from './reducers'
 import Root from './containers/Root'
-import {createStore, applyMiddleware} from 'redux'
-import thunk from 'redux-thunk'
-import "../css/libs.scss"
+import configureStore from './stores'
+import "../css/index.scss"
 
 
-const middleware = [ thunk ];
-
-
-const store = createStore(
-    reducer,
-    applyMiddleware(...middleware)
-)
+let store = configureStore();
 
 render(
-    <Provider store={store} >
+    <Provider store={store}>
         <Root/>
-    </Provider>
-    ,
+    </Provider>,
     document.getElementById('root')
-)
+);

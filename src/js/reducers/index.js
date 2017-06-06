@@ -2,8 +2,8 @@
  * Created by chenkang1 on 2017/6/3.
  */
 import {combineReducers} from 'redux'
-import mynav from './nav.reducer'
-import test from './test.reducer'
+import mynav from './home.reducer'
+import test from './blog.reducer'
 
 export default combineReducers({
     mynav,

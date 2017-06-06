@@ -3,18 +3,16 @@
  */
 
 const initialState = {
-    type:'test'
-}
+    type:'nav'
+};
 
-const test = (state = initialState, action) => {
+const home = (state = initialState, action) => {
 
     switch (action.type) {
-        case 'test':
-            return state;
 
         default:
             return state;
     }
-}
+};
 
-export default test;
+export default home;

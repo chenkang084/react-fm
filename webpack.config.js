@@ -24,15 +24,16 @@ var webpackConfig = {
         // filename: "bundle[hash].js" //the out put file name
         filename: "bundle.js"
     },
-    // devServer: {
-    //     contentBase: "./public", //webpack server read file path
-    //     colors: true, //terminal shows log with color
-    //     historyApiFallback: true, //
-    //     inline: true, //
-    //     hot: true,
-    //     progress: true,
-    //     compress: true
-    // },
+    devServer: {
+        contentBase: "./", //webpack server read file path
+        colors: true, //terminal shows log with color
+        historyApiFallback: true, //
+        inline: true, //
+        hot: true,
+        port:8888,
+        progress: true,
+        compress: true
+    },
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
         alias: {}
@@ -53,9 +54,6 @@ var webpackConfig = {
                 loader: 'file'
             },
             {
-                test: /\.(png|jpg)$/,
-                loader: 'file-loader?name=/[name].[hash:8].[ext]'
-            }, {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 loaders: ['react-hot', 'babel?presets[]=react,presets[]=es2015']
