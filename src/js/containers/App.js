@@ -5,6 +5,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import {CONFIG} from '../constants/Config';
 import NProgress from 'nprogress'
+import BoubleBind from "../components/DoubleBind";
 
 class App extends Component {
 
@@ -22,6 +23,9 @@ class App extends Component {
             <div>
                 <div id="logo">
                     <a href="#/">cobish.github.io</a>
+                </div>
+                <div>
+                    <BoubleBind text="good"/>
                 </div>
                 <div>
                     {this.props.children}

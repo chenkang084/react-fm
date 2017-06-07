@@ -25,7 +25,7 @@ class Archive extends Component {
             articles = {};
 
             for (let i=0;i<len;i++){
-                let time = parseInt(list[i]['created_at'].substring(0,4))
+                let time = parseInt(list[i]['created_at'].substring(0,4));
 
                 if (time !== year){
                     articles[time+'年'] = [];
