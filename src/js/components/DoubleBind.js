@@ -6,15 +6,23 @@ import React from 'react';
 class Ele extends React.Component {
     constructor(props) {
         super(props);
+        this.handleChange = this.handleChange.bind(this);
 
     }
 
+    handleChange(e){
+        this.props.upperTextChange(e);
+    }
+
     render() {
-        console.log(this.props.textVal)
+        console.log(this.props.textVal);
 
         // this.props.textVal = 20
         return (
-            <div>{this.props.textVal}</div>
+            <div>
+                <p>{this.props.textVal}</p>
+                <input onChange={this.handleChange}/>
+            </div>
         )
     }
 }
@@ -25,6 +33,7 @@ export default class BoubleBind extends React.Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
+        this.upperTextChange = this.upperTextChange.bind(this);
         this.state = {
             textVal: 'init'
         }
@@ -33,6 +42,14 @@ export default class BoubleBind extends React.Component {
     componentDidMount() {
 
     }
+
+    upperTextChange(e){
+        console.log(e);
+        this.setState({
+            textVal:e.target.value
+        })
+    }
+
 
     handleChange(e) {
         // console.log(e);
@@ -53,7 +70,7 @@ export default class BoubleBind extends React.Component {
                 <p>state:{this.state.textVal}</p>
                 <input onChange={this.handleChange}/>
                 sub:
-                <Ele textVal={this.state.textVal}/>
+                <Ele textVal={this.state.textVal} upperTextChange={this.upperTextChange}/>
             </div>
 
         )

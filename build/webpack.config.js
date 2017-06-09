@@ -11,29 +11,32 @@ var webpack = require('webpack'),
 console.log("=============================" + env + "=============================");
 console.log("=============================" + __dirname + "=============================");
 
+let rootPath = path.resolve(__dirname,'../');
+
+
 var webpackConfig = {
     devtool: 'cheap-module-source-map', //generate source map for developing
     entry: {
-        app: __dirname + "/src/js/index.js", //the main file for start app
+        app: rootPath + "/src/js/index.js", //the main file for start app
         vendor: [],
     },
 
     output: {
         // publicPath: __dirname + "/public",
-        path: __dirname + "/dist", //the path saving packed file
+        path: rootPath + "/dist", //the path saving packed file
         // filename: "bundle[hash].js" //the out put file name
         filename: "bundle.js"
     },
-    devServer: {
-        contentBase: "./", //webpack server read file path
-        colors: true, //terminal shows log with color
-        historyApiFallback: true, //
-        inline: true, //
-        hot: true,
-        port:8888,
-        progress: true,
-        compress: true
-    },
+    // devServer: {
+    //     contentBase: "./", //webpack server read file path
+    //     colors: true, //terminal shows log with color
+    //     historyApiFallback: true, //
+    //     inline: true, //
+    //     hot: true,
+    //     port:8888,
+    //     progress: true,
+    //     compress: true
+    // },
     resolve: {
         extensions: ['', '.webpack.js', '.web.js', '.ts', '.js'],
         alias: {}
@@ -68,7 +71,7 @@ var webpackConfig = {
     plugins: [
         new HtmlWebpackPlugin({
             filename: './index.html',
-            template: __dirname + "/src/html/index.html" //packed js append to index.html,set index.html path
+            template: rootPath + "/src/html/index.html" //packed js append to index.html,set index.html path
         }),
         new webpack.DefinePlugin({
             'process.env': "'" + env + "'",
@@ -84,7 +87,7 @@ var webpackConfig = {
         // new ngAnnotatePlugin({ add: true }),
 
         // new webpack.DllReferencePlugin({
-        //     context: __dirname + "",
+        //     context: rootPath + "",
         //     manifest: require('./app/assets/dll/vendor-manifest.json')
         // }),
 
