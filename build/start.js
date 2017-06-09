@@ -27,9 +27,9 @@ let devServer = new WebpackDevServer(compiler, {
 });
 
 devServer.listen(3000, err => {
-    if(err){
-        console.log(err)
-    }
+  if (err) {
+    console.log(err);
+  }
 
-    console.log('start dev server')
+  console.log("start dev server");
 });
