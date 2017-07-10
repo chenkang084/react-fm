@@ -1,5 +1,6 @@
 const webpack = require("webpack");
 const WebpackDevServer = require("webpack-dev-server");
+const path = require("path");
 
 const webpackConfig = require("./webpack.config.js");
 
@@ -12,9 +13,8 @@ function handleCompiler(err, stats) {
 }
 
 let compiler = webpack(webpackConfig);
-
 let devServer = new WebpackDevServer(compiler, {
-  contentBase: "./app", //webpack server read file path
+  contentBase: path.resolve(__dirname,"../src/"), //webpack server read file path
   colors: true, //terminal shows log with color
   historyApiFallback: true, //
   inline: true, //

@@ -22,7 +22,7 @@ var webpackConfig = {
     },
 
     output: {
-        // publicPath: __dirname + "/public",
+        // publicPath: path.resolve(__dirname, "../"),
         path: rootPath + "/dist", //the path saving packed file
         // filename: "bundle[hash].js" //the out put file name
         filename: "bundle.js"
